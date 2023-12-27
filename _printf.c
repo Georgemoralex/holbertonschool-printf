@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include <stdarg.h>
-#include <string.h>
 
 int _printf(const char *format, ...) {
     int count = 0;
@@ -13,7 +12,10 @@ int _printf(const char *format, ...) {
             format++;
             switch (*format) {
                 case 'c':
-                    count += write(1, va_arg(args, const char*), 1);
+                    {
+                        char ch = va_arg(args, int);
+                        count += write(1, &ch, 1);
+                    }
                     break;
                 case 's':
                     {
