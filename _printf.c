@@ -6,8 +6,7 @@ int _printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
 
-    int count;
-	count = 0;
+    int count = 0;
 
     while (*format) {
         if (*format == '%') {
