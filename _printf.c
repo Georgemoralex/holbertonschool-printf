@@ -1,19 +1,14 @@
 #include <unistd.h>
 #include <stdarg.h>
-#include <stdio.h>
+#include <string.h>
 
 int _printf(const char *format, ...) {
-    if (format == NULL) {
-        write(1, "(null format string)", 20);
-        return -1;
-    }
+    int count = 0;
 
     va_list args;
     va_start(args, format);
 
-    int count = 0;
-
-    while (*format) {
+    while (format && *format) {
         if (*format == '%') {
             format++;
             switch (*format) {
@@ -26,11 +21,10 @@ int _printf(const char *format, ...) {
                 case 's':
                     {
                         const char* str = va_arg(args, const char*);
-                        if (str == NULL) {
-                            count += write(1, "(null)", 6);
-                        } else {
+                        if (str != NULL) {
                             count += write(1, str, strlen(str));
                         }
+                        // If str is NULL, do nothing
                     }
                     break;
                 case '%':
