@@ -15,7 +15,6 @@ int _printf(const char *format, ...) {
     while (format && *format) {
         if (*format == '%') {
             format++;
-            // Check if the character following % is a valid format specifier
             if (*format == 'c' || *format == 's' || *format == '%') {
                 switch (*format) {
                     case 'c':
