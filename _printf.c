@@ -1,12 +1,17 @@
 #include <unistd.h>
 #include <stdarg.h>
-#include <string.h>
+#include <stdio.h>
 
 int _printf(const char *format, ...) {
-    int count = 0;
+    if (format == NULL) {
+        write(1, "(null format string)", 20);
+        return -1;
+    }
 
     va_list args;
     va_start(args, format);
+
+    int count = 0;
 
     while (*format) {
         if (*format == '%') {
@@ -37,7 +42,6 @@ int _printf(const char *format, ...) {
         } else {
             count += write(1, format, 1);
         }
-
         format++;
     }
     va_end(args);
