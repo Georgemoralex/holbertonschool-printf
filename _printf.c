@@ -10,62 +10,62 @@
  */
 int _printf(const char *format, ...)
 {
-    int count = 0;
-    char ch;
-    va_list args;
-    const char *str;
+	int count = 0;
+	char ch;
+	va_list args;
+	const char *str;
 
-    if (format == NULL)
-        return (-1);
+	if (format == NULL)
+		return (-1);
 
-    va_start(args, format);
+	va_start(args, format);
 
-    while (format && *format)
-    {
-        if (*format == '%')
-        {
-            format++;
-            if (*format == '\0')
-                return (-1);
+	while (format && *format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			if (*format == '\0')
+				return (-1);
 
-            switch (*format)
-            {
-                case 'c':
-                {
-                    ch = va_arg(args, int);
-                    count += write(1, &ch, 1);
-                }
-                break;
-                case 's':
-                {
-                    str = va_arg(args, const char*);
-                    if (str != NULL)
-                    {
-                        count += write(1, str, strlen(str));
-                    }
-                    else
-                    {
-                        count += write(1, "(null)", 6);
-                    }
-                }
-                break;
-                case '%':
-                    count += write(1, "%", 1);
-                    break;
-                default:
-                    count += write(1, "%", 1);
-                    count += write(1, format, 1);
-                    break;
-            }
-        }
-        else
-        {
-            count += write(1, format, 1);
-        }
+			switch (*format)
+			{
+				case 'c':
+				{
+					ch = va_arg(args, int);
+					count += write(1, &ch, 1);
+				}
+				break;
+				case 's':
+				{
+					str = va_arg(args, const char*);
+					if (str != NULL)
+					{
+						count += write(1, str, strlen(str));
+					}
+					else
+					{
+						count += write(1, "(null)", 6);
+					}
+				}
+				break;
+				case '%':
+					count += write(1, "%", 1);
+					break;
+				default:
+					count += write(1, "%", 1);
+					count += write(1, format, 1);
+					break;
+			}
+		}
+		else
+		{
+			count += write(1, format, 1);
+		}
 
-        format++;
-    }
+		format++;
+	}
 
-    va_end(args);
-    return (count);
+	va_end(args);
+	return (count);
 }
