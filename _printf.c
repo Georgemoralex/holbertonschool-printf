@@ -4,14 +4,13 @@
 
 int _printf(const char *format, ...) {
     int count;
+
     if (format == NULL) {
         return 0;
     }
     va_list args;
     va_start(args, format);
-
     count = 0;
-
     while (*format) {
         if (*format == '%') {
             format++;
