@@ -9,14 +9,14 @@
  */
 int _printf(const char *format, ...)
 {
+    va_list args;
+    char ch, *str;
+    int count = 0;
+
     if (!format)
         return -1;
 
-    va_list args;
     va_start(args, format);
-
-    int count = 0;
-    char ch, *str;
 
     while (format && *format)
     {
@@ -45,6 +45,7 @@ int _printf(const char *format, ...)
 
         format++;
     }
+
     va_end(args);
     return count;
 }
