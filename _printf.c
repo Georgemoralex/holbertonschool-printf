@@ -4,12 +4,12 @@
 
 int _printf(const char *format, ...) {
     int count;
+    va_list args;
 
     if (format == NULL) {
         return 0;
     }
 
-    va_list args;
     va_start(args, format);
 
     count = 0;
