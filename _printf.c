@@ -24,7 +24,6 @@ int _printf(const char *format, ...) {
                         if (str != NULL) {
                             count += write(1, str, strlen(str));
                         }
-                        // If str is NULL, do nothing
                     }
                     break;
                 case '%':
