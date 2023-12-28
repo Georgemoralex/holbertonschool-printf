@@ -7,24 +7,26 @@
 *@format: input to the printf function
 *Return: the number of characters printed (excluding the null byte)
 */
-int _printf(const char *format, ...) {
+int _printf(const char *format, ...)
+{
 	int count = 0;
 	va_list args;
 
-	if (format == NULL) {
+	if (format == NULL)
 		return (-1);
-	}
-
 	va_start(args, format);
 
 	while (format && *format) {
-		if (*format == '%') {
+		if (*format == '%')
+		{
 			format++;
-			if (*format == '\0') {
+			if (*format == '\0')
+			{
 				return (-1);
 				break;
 			}
-			switch (*format) {
+			switch (*format)
+			{
 				case 'c':
 					{
 						char ch = va_arg(args, int);
@@ -34,9 +36,12 @@ int _printf(const char *format, ...) {
 				case 's':
 					{
 						const char* str = va_arg(args, const char*);
-						if (str != NULL) {
+						if (str != NULL)
+						{
 							count += write(1, str, strlen(str));
-						} else {
+						}
+						else
+						{
 							count += write(1, "(null)", 6);
 						}
 					}
@@ -49,14 +54,14 @@ int _printf(const char *format, ...) {
 					count += write(1, format, 1);
 					break;
 			}
-		} else {
+		}
+		else
+		{
 			count += write(1, format, 1);
 		}
 
 		format++;
 	}
-
 	va_end(args);
-
 	return (count);
 }
