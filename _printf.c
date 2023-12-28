@@ -12,7 +12,7 @@ int _printf(const char *format, ...) {
 	va_list args;
 
 	if (format == NULL) {
-		return -1;
+		return (-1);
 	}
 
 	va_start(args, format);
@@ -21,7 +21,7 @@ int _printf(const char *format, ...) {
 		if (*format == '%') {
 			format++;
 			if (*format == '\0') {
-				return -1;
+				return (-1);
 				break;
 			}
 			switch (*format) {
@@ -58,5 +58,5 @@ int _printf(const char *format, ...) {
 
 	va_end(args);
 
-	return count;
+	return (count);
 }
