@@ -3,15 +3,14 @@
 #include <string.h>
 
 /**
- * _printf - simulates printf function
+ * _printf - similar to printf function
  * @format: input to the printf function
  * Return: the number of characters printed (excluding the null byte)
  */
 int _printf(const char *format, ...)
 {
-    va_list args;
-    char ch, *str;
     int count = 0;
+    va_list args;
 
     if (!format)
         return -1;
@@ -25,11 +24,10 @@ int _printf(const char *format, ...)
             switch (*format)
             {
                 case 'c':
-                    count += write(1, &ch, 1), ch = va_arg(args, int);
+                    count += write(1, va_arg(args, int[]), 1);
                     break;
                 case 's':
-                    str = va_arg(args, char *);
-                    count += write(1, str ? str : "(null)", str ? strlen(str) : 6);
+                    count += write(1, va_arg(args, const char *), va_arg(args, int));
                     break;
                 case '%':
                     count += write(1, "%", 1);
