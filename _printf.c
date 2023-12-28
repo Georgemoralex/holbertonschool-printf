@@ -1,7 +1,12 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <string.h>
-
+/**
+*_printf - similar to printf function
+*Description: simulates printf function
+*@format: input to the printf function
+*Return: the number of characters printed (excluding the null byte)
+*/
 int _printf(const char *format, ...) {
     int count = 0;
     va_list args;
