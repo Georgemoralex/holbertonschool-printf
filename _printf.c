@@ -3,18 +3,12 @@
 #include <string.h>
 
 int _printf(const char *format, ...) {
-    int count;
+    int count = 0;
+
     va_list args;
-
-    if (format == NULL) {
-        return 0;
-    }
-
     va_start(args, format);
 
-    count = 0;
-
-    while (*format) {
+    while (format && *format) {
         if (*format == '%') {
             format++;
             switch (*format) {
@@ -30,7 +24,7 @@ int _printf(const char *format, ...) {
                         if (str != NULL) {
                             count += write(1, str, strlen(str));
                         } else {
-							return 0;
+                            count += write(1, "(null)", 6);
                         }
                     }
                     break;
