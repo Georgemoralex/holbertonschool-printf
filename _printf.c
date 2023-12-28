@@ -7,7 +7,7 @@ int _printf(const char *format, ...) {
     va_list args;
 
 	if (format == NULL) {
-		return 1;
+		return count;
 	}
     va_start(args, format);
 
