@@ -10,13 +10,16 @@
 int _printf(const char *format, ...)
 {
 	int count = 0;
+	char ch;
 	va_list args;
+	const char *str;
 
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
 
-	while (format && *format) {
+	while (format && *format)
+	{
 		if (*format == '%')
 		{
 			format++;
@@ -29,13 +32,13 @@ int _printf(const char *format, ...)
 			{
 				case 'c':
 					{
-						char ch = va_arg(args, int);
+						ch = va_arg(args, int);
 						count += write(1, &ch, 1);
 					}
 					break;
 				case 's':
 					{
-						const char* str = va_arg(args, const char*);
+						str = va_arg(args, const char*);
 						if (str != NULL)
 						{
 							count += write(1, str, strlen(str));
