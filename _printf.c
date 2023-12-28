@@ -24,10 +24,17 @@ int _printf(const char *format, ...)
             switch (*format)
             {
                 case 'c':
-                    count += write(1, (char[]) { va_arg(args, int) }, 1);
-                    break;
+                {
+                    char ch = (char)va_arg(args, int);
+                    count += write(1, &ch, 1);
+                }
+                break;
                 case 's':
-                    count += write(1, va_arg(args, const char *), va_arg(args, int));
+                    {
+                        const char *str = va_arg(args, const char *);
+                        int len = va_arg(args, int);
+                        count += write(1, str ? str : "(null)", str ? len : 6);
+                    }
                     break;
                 case '%':
                     count += write(1, "%", 1);
