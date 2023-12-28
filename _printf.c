@@ -11,9 +11,7 @@
 int _printf(const char *format, ...)
 {
 	int count = 0;
-	char ch;
-	const char *str;
-	va_list args;
+	char ch, const char *str, va_list args;
 
 	if (format == NULL)
 		return (-1);
