@@ -21,7 +21,11 @@ int _printf(const char *format, ...) {
                 case 's':
                     {
                         const char* str = va_arg(args, const char*);
-                        count += write(1, str, strlen(str));
+                        if (str == NULL) {
+                            count += write(1, "(null)", 6);
+                        } else {
+                            count += write(1, str, strlen(str));
+                        }
                     }
                     break;
                 case '%':
@@ -36,8 +40,6 @@ int _printf(const char *format, ...) {
 
         format++;
     }
-
     va_end(args);
-
     return count;
 }
