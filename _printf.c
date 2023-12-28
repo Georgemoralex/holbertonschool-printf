@@ -6,9 +6,10 @@ int _printf(const char *format, ...) {
     int count = 0;
     va_list args;
 
-	if (format == NULL) {
-		return -1;
-	}
+    if (format == NULL) {
+        return -1;
+    }
+
     va_start(args, format);
 
     while (format && *format) {
@@ -35,8 +36,10 @@ int _printf(const char *format, ...) {
                     count += write(1, "%", 1);
                     break;
                 default:
-                    return -1;
-					break;
+                    // Print the unsupported specifier and continue
+                    count += write(1, "%", 1);
+                    count += write(1, format, 1);
+                    break;
             }
         } else {
             count += write(1, format, 1);
