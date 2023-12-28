@@ -11,6 +11,7 @@ int _printf(const char *format, ...)
 {
     int count = 0;
     va_list args;
+    char ch, *str;
 
     if (!format)
         return -1;
@@ -24,17 +25,11 @@ int _printf(const char *format, ...)
             switch (*format)
             {
                 case 'c':
-                {
-                    char ch = (char)va_arg(args, int);
-                    count += write(1, &ch, 1);
-                }
-                break;
+                    count += write(1, &va_arg(args, int), 1);
+                    break;
                 case 's':
-                    {
-                        const char *str = va_arg(args, const char *);
-                        int len = va_arg(args, int);
-                        count += write(1, str ? str : "(null)", str ? len : 6);
-                    }
+                    str = va_arg(args, char *);
+                    count += write(1, str ? str : "(null)", str ? strlen(str) : 6);
                     break;
                 case '%':
                     count += write(1, "%", 1);
