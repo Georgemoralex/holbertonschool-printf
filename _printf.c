@@ -35,7 +35,8 @@ int _printf(const char *format, ...) {
                     count += write(1, "%", 1);
                     break;
                 default:
-                    break;
+                    return -1;
+					break;
             }
         } else {
             count += write(1, format, 1);
