@@ -1,1 +1,9 @@
-man file, pending to be updated
+printf(3)               Library Functions Manual               printf(3)
+NAME         top
+       printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf,
+       vdprintf, vsprintf, vsnprintf - formatted output conversion
+LIBRARY         top
+       Standard C library (libc, -lc)
+SYNOPSIS
+
+DESCRIPTION
