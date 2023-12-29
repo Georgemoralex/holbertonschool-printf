@@ -44,7 +44,7 @@ void print_number(int num, int *count) {
     }
 
     while (divisor != 0) {
-        digit = num / divisor;
+        digit = num / divisor + '0';
         *count += write(1, &digit, 1);
         num %= divisor;
         divisor /= 10;
