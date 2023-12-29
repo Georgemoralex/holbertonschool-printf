@@ -75,7 +75,8 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
-	while (format && *format) {
+	while (format && *format)
+	{
 		if (*format == '%')
 		{
 			format++;
@@ -100,11 +101,13 @@ int _printf(const char *format, ...)
 					count += write(1, "%", 1) + write(1, format, 1);
 					break;
 			}
-		} else {
+		}
+		else
+		{
 			count += write(1, format, 1);
 		}
 		format++;
 	}
 	va_end(args);
-	return count;
+	return (count);
 }
