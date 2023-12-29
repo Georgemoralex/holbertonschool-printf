@@ -27,13 +27,11 @@ int _printf(const char *format, ...)
 			switch (*format)
 			{
 				case 'c':
-				{
-					ch = va_arg(args, int);
+				{ch = va_arg(args, int);
 					count += write(1, &ch, 1);
 				} break;
 				case 's':
-				{
-					str = va_arg(args, const char*);
+				{str = va_arg(args, const char*);
 					if (str != NULL)
 						count += write(1, str, strlen(str));
 					else
