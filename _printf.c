@@ -24,13 +24,38 @@ void print_string(const char *str, int *count) {
 }
 
 /**
+ * print_number - prints a number (int)
+ * @num: number to print
+ * @count: pointer to the count of printed characters
+ */
+void print_number(int num, int *count) {
+    // Handle negative numbers
+    if (num < 0) {
+        *count += write(1, "-", 1);
+        num = -num;
+    }
+
+    // Convert digits to characters and print
+    int divisor = 1;
+    while (num / divisor > 9) {
+        divisor *= 10;
+    }
+
+    while (divisor != 0) {
+        char digit = '0' + num / divisor;
+        *count += write(1, &digit, 1);
+        num %= divisor;
+        divisor /= 10;
+    }
+}
+
+/**
  * _printf - similar to printf function
  * Description: simulates printf function
  * @format: input to the printf function
  * Return: the number of characters printed (excluding the null byte)
  */
-int _printf(const char *format, ...)
-{
+int _printf(const char *format, ...) {
     int count = 0;
     va_list args;
 
@@ -39,21 +64,22 @@ int _printf(const char *format, ...)
 
     va_start(args, format);
 
-    while (format && *format)
-    {
-        if (*format == '%')
-        {
+    while (format && *format) {
+        if (*format == '%') {
             format++;
             if (*format == '\0')
                 return (-1);
 
-            switch (*format)
-            {
+            switch (*format) {
                 case 'c':
                     print_char(va_arg(args, int), &count);
                     break;
                 case 's':
                     print_string(va_arg(args, const char*), &count);
+                    break;
+                case 'd':
+                case 'i':
+                    print_number(va_arg(args, int), &count);
                     break;
                 case '%':
                     count += write(1, "%", 1);
@@ -62,13 +88,12 @@ int _printf(const char *format, ...)
                     count += write(1, "%", 1) + write(1, format, 1);
                     break;
             }
-        }
-        else
-        {
+        } else {
             count += write(1, format, 1);
         }
         format++;
     }
+
     va_end(args);
     return count;
 }
