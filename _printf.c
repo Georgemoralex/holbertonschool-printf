@@ -30,9 +30,9 @@ void print_string(const char *str, int *count)
  * @num: number to print
  * @count: pointer to the count of printed characters
  */
-void print_number(int num, int *count)
-{
+void print_number(int num, int *count) {
     int divisor = 1;
+    int digit;
 
     /* Handle negative numbers */
     if (num < 0) {
@@ -45,7 +45,6 @@ void print_number(int num, int *count)
         divisor *= 10;
     }
 
-    int digit;
     while (divisor != 0) {
         digit = num / divisor;
         *count += write(1, &digit, 1) + '0';
