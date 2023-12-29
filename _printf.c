@@ -29,21 +29,22 @@ void print_string(const char *str, int *count) {
  * @count: pointer to the count of printed characters
  */
 void print_number(int num, int *count) {
-    // Handle negative numbers
+    /* Handle negative numbers */
     if (num < 0) {
         *count += write(1, "-", 1);
         num = -num;
     }
 
-    // Convert digits to characters and print
+    /* Convert digits to characters and print */
     int divisor = 1;
     while (num / divisor > 9) {
         divisor *= 10;
     }
 
+    int digit;
     while (divisor != 0) {
-        char digit = '0' + num / divisor;
-        *count += write(1, &digit, 1);
+        digit = num / divisor;
+        *count += write(1, &digit, 1) + '0';
         num %= divisor;
         divisor /= 10;
     }
