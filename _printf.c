@@ -33,30 +33,33 @@ void print_string(const char *str, int *count)
  */
 void print_number(int num, int *count)
 {
-	if (num == INT_MIN)
-		print_string("-2147483648", count);
-	else
-		int divisor = 1;
-		int digit;
+    if (num == INT_MIN)
+	{
+        print_string("-2147483648", count);
+    } else {
+        int divisor = 1;
+        int digit;
 
-		/* Handle negative numbers */
-	if (num < 0)
-		*count += write(1, "-", 1);
-		num = -num;
+        /* Handle negative numbers */
+        if (num < 0)
+		{
+            *count += write(1, "-", 1);
+            num = -num;
+        }
 
-		/* Convert digits to characters and print */
-		while (num / divisor > 9) {
-			divisor *= 10;
-		}
+        /* Convert digits to characters and print */
+        while (num / divisor > 9) {
+            divisor *= 10;
+        }
 
-		while (divisor != 0) {
-			digit = num / divisor + '0';
-			*count += write(1, &digit, 1);
-			num %= divisor;
-			divisor /= 10;
-		}
+        while (divisor != 0) {
+            digit = num / divisor + '0';
+            *count += write(1, &digit, 1);
+            num %= divisor;
+            divisor /= 10;
+        }
+    }
 }
-
 /**
  * _printf - similar to printf function
  * Description: simulates printf function
