@@ -1,106 +1,85 @@
-#include <unistd.h>
-#include <stdarg.h>
-#include <string.h>
-#include <limits.h>
-
 /**
- * print_char - prints a character
- * @ch: character to print
- * @count: pointer to the count of printed characters
+ * _printf - A simplified implementation of the printf function
+ * Description: This function emulates the basic functionality of printf,
+ *              allowing the printing of characters ('c'), strings ('s'),
+ *              and the '%' character. It takes a format string and a variable
+ *              number of arguments and writes the formatted output to the
+ *              standard output (file descriptor 1). It does not handle
+ *              advanced features such as flags, field width, precision, or
+ *              length modifiers.
+ * @format: The format string containing format specifiers.
+ * Return: The number of characters successfully printed (excluding the null byte),
+ *         or -1 if the format string is NULL.
  */
-void print_char(char ch, int *count) {
-    *count += write(1, &ch, 1);
-}
-
-/**
- * print_string - prints a string
- * @str: string to print
- * @count: pointer to the count of printed characters
- */
-void print_string(const char *str, int *count) {
-    if (str != NULL)
-        *count += write(1, str, strlen(str));
-    else
-        *count += write(1, "(null)", 6);
-}
-
-/**
- * print_number - prints a number (int)
- * @num: number to print
- * @count: pointer to the count of printed characters
- */
-void print_number(int num, int *count) {
-    if (num == INT_MIN) {
-        print_string("-2147483648", count);
-    } else {
-        int divisor = 1;
-        int digit;
-
-        /* Handle negative numbers */
-        if (num < 0) {
-            *count += write(1, "-", 1);
-            num = -num;
-        }
-
-        /* Convert digits to characters and print */
-        while (num / divisor > 9) {
-            divisor *= 10;
-        }
-
-        while (divisor != 0) {
-            digit = num / divisor + '0';
-            *count += write(1, &digit, 1);
-            num %= divisor;
-            divisor /= 10;
-        }
-    }
-}
-
-/**
- * _printf - similar to printf function
- * Description: simulates printf function
- * @format: input to the printf function
- * Return: the number of characters printed (excluding the null byte)
- */
-int _printf(const char *format, ...) {
+int _printf(const char *format, ...)
+{
     int count = 0;
+    char ch;
+    const char *str;
     va_list args;
 
+    // Check if the format string is NULL
     if (format == NULL)
         return (-1);
 
+    // Initialize the va_list for variable arguments
     va_start(args, format);
 
-    while (format && *format) {
-        if (*format == '%') {
+    // Iterate through the format string
+    while (format && *format)
+    {
+        // Check if the current character is '%'
+        if (*format == '%')
+        {
             format++;
+
+            // Check if '%' is followed by the null terminator
             if (*format == '\0')
                 return (-1);
 
-            switch (*format) {
+            // Switch based on the character following '%'
+            switch (*format)
+            {
                 case 'c':
-                    print_char(va_arg(args, int), &count);
+                    // Retrieve and print a character argument
+                    ch = va_arg(args, int);
+                    count += write(1, &ch, 1);
                     break;
+
                 case 's':
-                    print_string(va_arg(args, const char*), &count);
+                    // Retrieve and print a string argument
+                    str = va_arg(args, const char*);
+                    if (str != NULL)
+                        count += write(1, str, strlen(str));
+                    else
+                        count += write(1, "(null)", 6);
                     break;
-                case 'd':
-                case 'i':
-                    print_number(va_arg(args, int), &count);
-                    break;
+
                 case '%':
+                    // Print the '%' character
                     count += write(1, "%", 1);
                     break;
+
                 default:
-                    count += write(1, "%", 1) + write(1, format, 1);
+                    // Print '%' and the current character
+                    count += write(1, "%", 1);
+                    count += write(1, format, 1);
                     break;
             }
-        } else {
+        }
+        else
+        {
+            // Print the current character
             count += write(1, format, 1);
         }
+
+        // Move to the next character in the format string
         format++;
     }
 
+    // Clean up the va_list variable
     va_end(args);
-    return count;
+
+    // Return the total count of characters printed
+    return (count);
 }
