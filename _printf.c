@@ -24,17 +24,6 @@ void print_string(const char *str, int *count) {
 }
 
 /**
- * print_int - prints an integer
- * @n: integer to print
- * @count: pointer to the count of printed characters
- */
-void print_int(int n, int *count) {
-    char buffer[20];  // Assumes a maximum of 20 characters for the integer
-    int len = sprintf(buffer, "%d", n);
-    *count += write(1, buffer, len);
-}
-
-/**
  * _printf - similar to printf function
  * Description: simulates printf function
  * @format: input to the printf function
@@ -66,10 +55,6 @@ int _printf(const char *format, ...)
                 case 's':
                     print_string(va_arg(args, const char*), &count);
                     break;
-                case 'd':
-                case 'i':
-                    print_int(va_arg(args, int), &count);
-                    break;
                 case '%':
                     count += write(1, "%", 1);
                     break;
@@ -82,10 +67,8 @@ int _printf(const char *format, ...)
         {
             count += write(1, format, 1);
         }
-
         format++;
     }
-
     va_end(args);
     return count;
 }
