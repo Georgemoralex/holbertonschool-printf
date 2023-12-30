@@ -1,91 +1,145 @@
 _printf(3)               Library Functions Manual               _printf(3)
 
 NAME
-	   printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf,
-	   vdprintf, vsprintf, vsnprintf - formatted output conversion
+		_printf - write output to stdout, the standard output stream
+
 LIBRARY
-	   Standard C library (libc, -lc)
+		Non - Standard C library (main.h)
+
 SYNOPSIS
+		#include <unistd.h>
+		#include <stdarg.h>
+		#include <string.h>
+		#include <limits.h>
+		
+		int _printf(const char *format, ...);
 
 DESCRIPTION
-
-Returns: the number of characters printed (excluding the null byte used to end output to strings)
-write output to stdout, the standard output stream
-format is a character string. The format string is composed of zero or more directives. See man 3 printf for more detail. You need to handle the following conversion specifiers:
-c
-s
-%
-You don’t have to reproduce the buffer handling of the C library printf function
-You don’t have to handle the flag characters
-You don’t have to handle field width
-You don’t have to handle precision
-You don’t have to handle the length modifiers
+		The _printf() function is similar to the printf() function, providing
+		formatted output. It accepts a format string and additional arguments,
+		formatting and printing the data according to the format specifier in
+		the string. It writes output to stdout, the standard output stream.
 
 	Format of the format string
-	Flag characters
-	Field width
-	Precision
-	Length modifier
+		Format is a character string. The format string is composed of zero or more directives.
+
 	Conversion specifiers
-		   A character that specifies the type of conversion to be applied.
-	   The conversion specifiers and their meanings are:
+		A character that specifies the type of conversion to be applied.
+	   	The conversion specifiers and their meanings are:
 
-	   d, i   The int argument is converted to signed decimal notation.
-			  The precision, if any, gives the minimum number of digits
-			  that must appear; if the converted value requires fewer
-			  digits, it is padded on the left with zeros.  The default
-			  precision is 1.  When 0 is printed with an explicit
-			  precision 0, the output is empty.
+		c      	If no l modifier is present, the int argument is converted
+				to an unsigned char, and the resulting character is
+				written.  If an l modifier is present, the wint_t (wide
+				character) argument is converted to a multibyte sequence
+				by a call to the wcrtomb(3) function, with a conversion
+				state starting in the initial state, and the resulting
+				multibyte string is written.
 
-	   s      If no l modifier is present: the const char * argument is
-			  expected to be a pointer to an array of character type
-			  (pointer to a string).  Characters from the array are
-			  written up to (but not including) a terminating null byte
-			  ('\0'); if a precision is specified, no more than the
-			  number specified are written.  If a precision is given, no
-			  null byte need be present; if the precision is not
-			  specified, or is greater than the size of the array, the
-			  array must contain a terminating null byte.
+		d, i   	The int argument is converted to signed decimal notation.
+				The precision, if any, gives the minimum number of digits
+				that must appear; if the converted value requires fewer
+				digits, it is padded on the left with zeros.  The default
+				precision is 1.  When 0 is printed with an explicit
+				precision 0, the output is empty.
 
-			  If an l modifier is present: the const wchar_t * argument
-			  is expected to be a pointer to an array of wide
-			  characters.  Wide characters from the array are converted
-			  to multibyte characters (each by a call to the wcrtomb(3)
-			  function, with a conversion state starting in the initial
-			  state before the first wide character), up to and
-			  including a terminating null wide character.  The
-			  resulting multibyte characters are written up to (but not
-			  including) the terminating null byte.  If a precision is
-			  specified, no more bytes than the number specified are
-			  written, but no partial multibyte characters are written.
-			  Note that the precision determines the number of bytes
-			  written, not the number of wide characters or screen
-			  positions.  The array must contain a terminating null wide
-			  character, unless a precision is given and it is so small
-			  that the number of bytes written exceeds it before the end
-			  of the array is reached.
+		s      	If no l modifier is present: the const char * argument is
+				expected to be a pointer to an array of character type
+				(pointer to a string).  Characters from the array are
+				written up to (but not including) a terminating null byte
+				('\0'); if a precision is specified, no more than the
+				number specified are written.  If a precision is given, no
+				null byte need be present; if the precision is not
+				specified, or is greater than the size of the array, the
+				array must contain a terminating null byte.
 
-	   %      A '%' is written.  No argument is converted.  The complete
-			  conversion specification is '%%'.
+				If an l modifier is present: the const wchar_t * argument
+				is expected to be a pointer to an array of wide
+				characters.  Wide characters from the array are converted
+				to multibyte characters (each by a call to the wcrtomb(3)
+				function, with a conversion state starting in the initial
+				state before the first wide character), up to and
+				including a terminating null wide character.  The
+				resulting multibyte characters are written up to (but not
+				including) the terminating null byte.  If a precision is
+				specified, no more bytes than the number specified are
+				written, but no partial multibyte characters are written.
+				Note that the precision determines the number of bytes
+				written, not the number of wide characters or screen
+				positions.  The array must contain a terminating null wide
+				character, unless a precision is given and it is so small
+				that the number of bytes written exceeds it before the end
+				of the array is reached.
+
+		%      	A '%' is written.  No argument is converted.  The complete
+				conversion specification is '%%'.
+
+		Unlike the original version of the printf() function, the following elements are not being considered in _printf().
+		 - buffer handling of the C library printf function
+		 - flag characters
+		 - field width
+		 - precision
+		 - length modifiers
 
 RETURN VALUE
-	   Upon successful return, these functions return the number of
-	   characters printed (excluding the null byte used to end output to
-	   strings).
+		Upon successful return, _printf() function returns the number of
+		characters printed (excluding the null byte used to end output to
+		strings).
 
-	   The functions snprintf() and vsnprintf() do not write more than
-	   size bytes (including the terminating null byte ('\0')).  If the
-	   output was truncated due to this limit, then the return value is
-	   the number of characters (excluding the terminating null byte)
-	   which would have been written to the final string if enough space
-	   had been available.  Thus, a return value of size or more means
-	   that the output was truncated.  (See also below under NOTES.)
-
-	   If an output error is encountered, a negative value is returned.
+		If an output error is encountered, a negative value is returned.
 
 ATTRIBUTES
+		None
 
 STANDARDS
+		None
+
 HISTORY
+		None
+
 BUGS
+		None
+
 EXAMPLES
+	Four examples that cover the basic usage of each conversion specifier in the _printf() function.
+
+    - %c: Print a character.
+		#include <stdio.h>
+		#include "your_printf_header.h"
+
+		int main(void) {
+			char myChar = 'A';
+			_printf("Character: %c\n", myChar);
+			return 0;
+		}
+
+	- %s: Print a string.
+		#include <stdio.h>
+		#include "your_printf_header.h"
+
+		int main(void) {
+			const char* myString = "Hello, World!";
+			_printf("String: %s\n", myString);
+			return 0;
+		}
+	   
+	- %d or %i: Print an integer.
+		#include <stdio.h>
+		#include "your_printf_header.h"
+
+		int main(void) {
+			int myInt = 42;
+			_printf("Integer: %d\n", myInt);
+			return 0;
+		}
+
+	- %%: Print a percent sign.
+		#include <stdio.h>
+		#include "your_printf_header.h"
+
+		int main(void) {
+			_printf("Percent Sign: %%\n");
+			return 0;
+		}
+
+SEE ALSO
+		printf(3), write(2), va_arg(3)
