@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 Group Project:                                                                      
@@ -121,3 +122,8 @@ Handle the following custom conversion specifier:
 All the above options work well together. 
 
 
+=======
+# holbertonschool-printf
+printf function recreated in C
+Test
+>>>>>>> b8253976f6ee470c816f21708a42d4363c2a0f5c
