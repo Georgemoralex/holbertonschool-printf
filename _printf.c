@@ -33,11 +33,7 @@ void print_string(const char *str, int *count)
  */
 void print_number(int num, int *count)
 {
-	if (num == INT_MIN)
-	{
-		print_string("-2147483648", count);
-	}
-	else
+
 	{
 		int divisor = 1;
 		int digit;
