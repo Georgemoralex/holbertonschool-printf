@@ -31,7 +31,7 @@ void print_string(const char *str, int *count)
  * @num: number to print
  * @count: pointer to the count of printed characters
  */
-void print_number(int num, int *count)
+void print_number(long int num, int *count)
 {
 
 	{
@@ -88,7 +88,7 @@ int _printf(const char *format, ...)
 					break;
 				case 'd':
 				case 'i':
-					print_number(va_arg(args, int), &count);
+					print_number(va_arg(args, long int), &count);
 					break;
 				case '%':
 					count += write(1, "%", 1);
