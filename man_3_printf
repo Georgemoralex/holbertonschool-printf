@@ -27,41 +27,17 @@ DESCRIPTION
 		A character that specifies the type of conversion to be applied.
 	   	The conversion specifiers and their meanings are:
 
-		c      	The int argument is converted to an unsigned char, and the resulting character is
-				written.
+		c      	The int argument is converted to an unsigned char, and the resulting character is written.
 
-		d, i   	The int argument is converted to signed decimal notation.
+		d, i   	This conversion specificier is used to print integers, when using this conversion specifier, 
+			a print_number subfunction is called where the int argument is converted to signed decimal notation.
 
-		s      	If no l modifier is present: the const char * argument is
-				expected to be a pointer to an array of character type
-				(pointer to a string).  Characters from the array are
-				written up to (but not including) a terminating null byte
-				('\0'); if a precision is specified, no more than the
-				number specified are written.  If a precision is given, no
-				null byte need be present; if the precision is not
-				specified, or is greater than the size of the array, the
-				array must contain a terminating null byte.
+		s      	This conversion specifier is used to print a string. It calls a function called print_function
+			that takes a string (str) and a pointer to an integer (count) as parameter.
+			it checks if the string is not NULL. If not, it writes the string to the standard output.
+			if the string is NULL, it writes the string ¨(null)¨ to the standard output.
 
-				If an l modifier is present: the const wchar_t * argument
-				is expected to be a pointer to an array of wide
-				characters.  Wide characters from the array are converted
-				to multibyte characters (each by a call to the wcrtomb(3)
-				function, with a conversion state starting in the initial
-				state before the first wide character), up to and
-				including a terminating null wide character.  The
-				resulting multibyte characters are written up to (but not
-				including) the terminating null byte.  If a precision is
-				specified, no more bytes than the number specified are
-				written, but no partial multibyte characters are written.
-				Note that the precision determines the number of bytes
-				written, not the number of wide characters or screen
-				positions.  The array must contain a terminating null wide
-				character, unless a precision is given and it is so small
-				that the number of bytes written exceeds it before the end
-				of the array is reached.
-
-		%      	A '%' is written.  No argument is converted.  The complete
-				conversion specification is '%%'.
+		%      	A '%' is written.  No argument is converted.  The complete conversion specification is '%%'.
 
 		Unlike the original version of the printf() function, the following elements are not being considered in _printf().
 		 - buffer handling of the C library printf function
